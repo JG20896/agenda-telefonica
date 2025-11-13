@@ -6,8 +6,13 @@ require_once 'includes/funciones.php';
 $database = new Database();
 $db = $database->getConnection();
 
-$nombreUsuario = isset($_SESSION['usuario']) ? $_SESSION['usuario'] : 'Visitante';
-$mensaje_bienvenida = "Bienvenido, $nombreUsuario";
+if (!isset($_SESSION['pagina_visitada'])) {
+    $_SESSION['mensaje'] = mostrarMensaje('success', 
+        '🌟 ¡Bienvenido a tu Agenda Telefónica! 📒<br>'
+        . '<small>Gestiona tus contactos de forma fácil y segura</small>'
+    );
+    $_SESSION['pagina_visitada'] = true;
+}
 
 $pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
 $porPagina = 10;
